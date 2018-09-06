@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Dounky.Core.Dtos;
+using Dounky.Core.Entities;
 
 namespace Dounky.Core.Helpers
 {
@@ -9,8 +8,8 @@ namespace Dounky.Core.Helpers
     {
         public AutoMapperProfile()
         {
-            //CreateMap<User, UserDto>();
-            //CreateMap<UserDto, User>();
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }
