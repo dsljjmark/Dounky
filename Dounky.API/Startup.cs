@@ -18,7 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Swagger;
+
 
 namespace Dounky.API
 {
@@ -41,11 +41,11 @@ namespace Dounky.API
             //autoMapper
             services.AddAutoMapper();
             //cors
-            services.AddCors();
+            services.AddCorsExtentions();
             // add db
             services.AddDbContext<DataContext>(x => x.UseInMemoryDatabase("TestDb"));
             // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            services.RegisterIOCContainer();
 
 
             /////////// busy part
@@ -98,16 +98,14 @@ namespace Dounky.API
                 app.UseDeveloperExceptionPage();
                 //swagger
                 app.UseSwaggerDocumentation();
+
                 loggerFactory.AddConsole(Configuration.GetSection("Logging"));
                 loggerFactory.AddDebug();
             }
 
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+            //cors
+            app.UseCorsExtentions();
+          
             // auth
             app.UseAuthentication();
 
